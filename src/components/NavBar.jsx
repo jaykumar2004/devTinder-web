@@ -53,11 +53,11 @@ const NavBar = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/requests">Connections</Link>
+                <Link to="/requests">Requests</Link>
               </li>
 
               <li>
-                <Link to="/connections">Connection Requests</Link>
+                <Link to="/connections">Connections</Link>
               </li>
 
               <li>
