@@ -58,7 +58,7 @@ export default function DevTinderHomepage() {
           </h1>
           
           {/* Login Form with Border */}
-          <div className="w-full max-w-md bg-black/70 backdrop-blur-md rounded-xl p-8 shadow-2xl border border-gray-600">
+          <div className="w-full max-w-sm bg-black/70 backdrop-blur-md rounded-xl p-6 shadow-2xl border border-gray-600">
             {/* Header / Right Panel Content (on top) */}
             <div className="text-white text-center mb-6">
               <h2 className="text-2xl font-semibold">

@@ -24,9 +24,9 @@ const NavBar = () => {
       <div className="flex-1">
         <Link
           to="/"
-          className="text-4xl font-bold tracking-wide hover:scale-105 transition-transform duration-200"
+          className="text-xl font-bold tracking-wide hover:scale-105 transition-transform duration-200"
         >
-          <img src="" alt="" /> DevTinder
+         DevTinder
         </Link>
       </div>
 
