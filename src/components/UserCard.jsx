@@ -23,7 +23,7 @@ const UserCard = ({ user, showActions = true }) => {
   };
 
   return (
-    <div className="card bg-base-300 w-70 shadow-sm">
+    <div className="card bg-base-300 w-80 shadow-sm">
       <figure>
         <img src={photoUrl} alt="User" />
       </figure>
