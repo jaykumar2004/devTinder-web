@@ -1,11 +1,11 @@
-import axios from "axios";
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
-import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { addUser } from "../utils/userSlice";
 import { BASE_URL } from "../utils/constants";
 
-const Login = () => {
+export default function DevTinderHomepage() {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -19,10 +19,7 @@ const Login = () => {
     try {
       const res = await axios.post(
         BASE_URL + "/login",
-        {
-          emailId,
-          password,
-        },
+        { emailId, password },
         { withCredentials: true }
       );
       dispatch(addUser(res.data));
@@ -36,12 +33,7 @@ const Login = () => {
     try {
       const res = await axios.post(
         BASE_URL + "/signup",
-        {
-          firstName,
-          lastName,
-          emailId,
-          password,
-        },
+        { firstName, lastName, emailId, password },
         { withCredentials: true }
       );
       dispatch(addUser(res.data.data));
@@ -52,86 +44,115 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center my-10">
-      <div className="card bg-base-300 w-96 shadow-sm">
-        <div className="card-body">
-          <h2 className="card-title justify-center">
-            {isLoginForm ? "Login" : "SignUp"}
-          </h2>
-          <div>
+    <div className="relative w-full min-h-screen bg-black text-white overflow-hidden">
+      {/* Background Image Overlay with Phones */}
+      <div className="absolute inset-0 opacity-60 bg-gradient-to-b from-black to-transparent">
+        {/* We'll use a dark overlay instead of actual phone images */}
+      </div>
+      {/* Main Content */}
+      <div className="relative z-10 w-full">
+        {/* Hero Content with Login Form */}
+        <div className="flex flex-col items-center justify-center px-4 py-8 md:py-16 text-center">
+          <h1 className="text-5xl md:text-8xl font-bold mb-8">
+            Start something epic.
+          </h1>
+          
+          {/* Login Form with Border */}
+          <div className="w-full max-w-md bg-black/70 backdrop-blur-md rounded-xl p-8 shadow-2xl border border-gray-600">
+            {/* Header / Right Panel Content (on top) */}
+            <div className="text-white text-center mb-6">
+              <h2 className="text-2xl font-semibold">
+                Welcome to DevTinder 👋
+              </h2>
+              <p className="text-sm text-gray-300">
+                Find developer friends. Match. Collaborate. Build.
+              </p>
+            </div>
+
+            {/* Form Title */}
+            <h3 className="text-xl text-white font-bold mb-4 text-center">
+              {isLoginForm ? "Login to Your Account" : "Create a New Account"}
+            </h3>
+
+            {/* Sign Up Fields */}
             {!isLoginForm && (
               <>
-                <label className="form-control w-full max-w-xs py-4">
-                  <div className="label">
-                    <span className="label-text my-2">First Name</span>
-                  </div>
+                <label className="block mb-4">
+                  <span className="text-sm text-white">First Name</span>
                   <input
                     type="text"
                     value={firstName}
-                    className="input input-bordered w-full max-w-xs"
                     onChange={(e) => setFirstName(e.target.value)}
+                    className="w-full mt-1 px-4 py-2 rounded-md bg-white/10 border border-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-gray-300"
                   />
                 </label>
-
-                <label className="form-control w-full max-w-xs py-4">
-                  <div className="label">
-                    <span className="label-text my-2">Last Name</span>
-                  </div>
+                <label className="block mb-4">
+                  <span className="text-sm text-white">Last Name</span>
                   <input
                     type="text"
                     value={lastName}
-                    className="input input-bordered w-full max-w-xs"
                     onChange={(e) => setLastName(e.target.value)}
+                    className="w-full mt-1 px-4 py-2 rounded-md bg-white/10 border border-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-gray-300"
                   />
                 </label>
               </>
             )}
 
-            <label className="form-control w-full max-w-xs py-4">
-              <div className="label">
-                <span className="label-text my-2">Email ID</span>
-              </div>
+            {/* Email */}
+            <label className="block mb-4">
+              <span className="text-sm text-white">Email ID</span>
               <input
                 type="text"
                 value={emailId}
-                className="input input-bordered w-full max-w-xs"
                 onChange={(e) => setEmailId(e.target.value)}
+                className="w-full mt-1 px-4 py-2 rounded-md bg-white/10 border border-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-gray-300"
               />
             </label>
 
-            <label className="form-control w-full max-w-xs py-4">
-              <div className="label">
-                <span className="label-text my-2">Password</span>
-              </div>
+            {/* Password */}
+            <label className="block mb-4">
+              <span className="text-sm text-white">Password</span>
               <input
                 type="password"
                 value={password}
-                className="input input-bordered w-full max-w-xs"
                 onChange={(e) => setPassword(e.target.value)}
+                className="w-full mt-1 px-4 py-2 rounded-md bg-white/10 border border-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-gray-300"
               />
             </label>
-          </div>
-          <p className="text-red-500">{error}</p>
-          <div className="card-actions justify-center my-2">
+
+            {/* Error Message */}
+            <p className="text-red-400 text-center text-sm mb-4">{error}</p>
+
+            {/* Submit Button */}
             <button
-              className="btn btn-primary"
+              className="w-full bg-white text-black font-semibold py-2 rounded-md hover:bg-gray-200 transition-all duration-200 mb-4"
               onClick={isLoginForm ? handleLogin : handleSignUp}
             >
               {isLoginForm ? "Login" : "Sign Up"}
             </button>
+
+            {/* Toggle */}
+            <p
+              className="text-sm text-center text-white underline cursor-pointer hover:text-gray-300"
+              onClick={() => setIsLoginForm((prev) => !prev)}
+            >
+              {isLoginForm
+                ? "New User? Signup Here"
+                : "Already have an account? Login Here"}
+            </p>
           </div>
-          <p
-            className="m-auto cursor-pointer py-2"
-            onClick={() => setIsLoginForm((value) => !value)}
-          >
-            {isLoginForm
-              ? "New User? Signup Here"
-              : "Existing User? Login Here"}
-          </p>
         </div>
+      </div>
+      
+      {/* Phone Grid Mockup - Visual background only */}
+      <div className="absolute inset-0 opacity-50">
+        {/* This would be where the phone grid is positioned */}
+      </div>
+      
+      {/* Footer */}
+      <div className="absolute bottom-0 w-full p-4 text-center text-xs text-gray-400">
+        All photos are of models and used for illustrative purposes only
       </div>
     </div>
   );
-};
-
-export default Login;
+}
