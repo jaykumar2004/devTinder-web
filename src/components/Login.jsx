@@ -125,7 +125,7 @@ export default function DevTinderHomepage() {
 
             {/* Submit Button */}
             <button
-              className="w-full bg-white text-black font-semibold py-2 rounded-md hover:bg-gray-200 transition-all duration-200 mb-4"
+              className="w-full bg-white text-black font-semibold py-2 rounded-md hover:bg-gray-200 transition-all duration-200 mb-4 cursor-pointer"
               onClick={isLoginForm ? handleLogin : handleSignUp}
             >
               {isLoginForm ? "Login" : "Sign Up"}
