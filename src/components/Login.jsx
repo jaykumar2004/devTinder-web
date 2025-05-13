@@ -44,22 +44,25 @@ export default function DevTinderHomepage() {
   };
 
   return (
-    <div className="relative w-full min-h-screen bg-black text-white overflow-hidden">
-      {/* Background Image Overlay with Phones */}
-      <div className="absolute inset-0 opacity-60 bg-gradient-to-b from-black to-transparent">
-        {/* We'll use a dark overlay instead of actual phone images */}
-      </div>
+    <div
+      className="relative w-full min-h-screen bg-black text-white overflow-hidden bg-cover bg-center"
+      style={{
+        backgroundImage:
+          'url("https://tinder.com/static/build/8ad4e4299ef5e377d2ef00ba5c94c44c.webp")',
+      }}
+    >
+      {/* Background Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-black/70 to-transparent"></div>
+
       {/* Main Content */}
       <div className="relative z-10 w-full">
-        {/* Hero Content with Login Form */}
         <div className="flex flex-col items-center justify-center px-4 py-8 md:py-16 text-center">
           <h1 className="text-5xl md:text-8xl font-bold mb-8">
             Start something epic.
           </h1>
-          
-          {/* Login Form with Border */}
+
+          {/* Login / SignUp Card */}
           <div className="w-full max-w-sm bg-black/70 backdrop-blur-md rounded-xl p-6 shadow-2xl border border-gray-600">
-            {/* Header / Right Panel Content (on top) */}
             <div className="text-white text-center mb-6">
               <h2 className="text-2xl font-semibold">
                 Welcome to DevTinder 👋
@@ -69,12 +72,10 @@ export default function DevTinderHomepage() {
               </p>
             </div>
 
-            {/* Form Title */}
             <h3 className="text-xl text-white font-bold mb-4 text-center">
               {isLoginForm ? "Login to Your Account" : "Create a New Account"}
             </h3>
 
-            {/* Sign Up Fields */}
             {!isLoginForm && (
               <>
                 <label className="block mb-4">
@@ -98,7 +99,6 @@ export default function DevTinderHomepage() {
               </>
             )}
 
-            {/* Email */}
             <label className="block mb-4">
               <span className="text-sm text-white">Email ID</span>
               <input
@@ -109,7 +109,6 @@ export default function DevTinderHomepage() {
               />
             </label>
 
-            {/* Password */}
             <label className="block mb-4">
               <span className="text-sm text-white">Password</span>
               <input
@@ -120,10 +119,8 @@ export default function DevTinderHomepage() {
               />
             </label>
 
-            {/* Error Message */}
             <p className="text-red-400 text-center text-sm mb-4">{error}</p>
 
-            {/* Submit Button */}
             <button
               className="w-full bg-white text-black font-semibold py-2 rounded-md hover:bg-gray-200 transition-all duration-200 mb-4 cursor-pointer"
               onClick={isLoginForm ? handleLogin : handleSignUp}
@@ -131,7 +128,6 @@ export default function DevTinderHomepage() {
               {isLoginForm ? "Login" : "Sign Up"}
             </button>
 
-            {/* Toggle */}
             <p
               className="text-sm text-center text-white underline cursor-pointer hover:text-gray-300"
               onClick={() => setIsLoginForm((prev) => !prev)}
@@ -143,12 +139,7 @@ export default function DevTinderHomepage() {
           </div>
         </div>
       </div>
-      
-      {/* Phone Grid Mockup - Visual background only */}
-      <div className="absolute inset-0 opacity-50">
-        {/* This would be where the phone grid is positioned */}
-      </div>
-      
+
       {/* Footer */}
       <div className="absolute bottom-0 w-full p-4 text-center text-xs text-gray-400">
         All photos are of models and used for illustrative purposes only
