@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { createSocketConnection } from "../utils/socket";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
 
 const Chat = () => {
   const { targetUserId } = useParams();
@@ -10,19 +12,41 @@ const Chat = () => {
   const user = useSelector((store) => store.user);
   const userId = user?._id;
 
+  const fetchChatMessages = async () => {
+    const chat = await axios.get(BASE_URL + "/chat/" + targetUserId, {
+      withCredentials: true,
+    });
+
+    console.log(chat.data.messages);
+
+    const chatMessages = chat?.data?.messages.map((msg) => {
+      const { senderId, text } = msg;
+      return {
+        firstName: senderId?.firstName,
+        lastName: senderId?.lastName,
+        text,
+      };
+    });
+    setMessages(chatMessages);
+  };
+  useEffect(() => {
+    fetchChatMessages();
+  }, []);
+
   useEffect(() => {
     if (!userId) return;
 
     const socket = createSocketConnection();
     socket.emit("joinChat", {
       firstName: user.firstName,
+      lastName: user.lastName,
       userId,
       targetUserId,
     });
 
-    socket.on("messageReceived", ({ firstName, text }) => {
+    socket.on("messageReceived", ({ firstName, lastName, text }) => {
       console.log(firstName, " : ", text);
-      setMessages((messages) => [...messages, { firstName, text }]);
+      setMessages((messages) => [...messages, { firstName, lastName, text }]);
     });
 
     return () => {
@@ -52,14 +76,19 @@ const Chat = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="w-3/4 h-[70vh] bg-black bg-opacity-70 border border-gray-600 m-5 flex flex-col text-white rounded-lg shadow-lg">
-        <h1 className="p-5 border-b border-gray-600 text-xl font-semibold">Chat</h1>
+      <div className="w-3/4 h-[70vh] border border-gray-600 m-5 flex flex-col text-white rounded-lg shadow-lg">
+        <h1 className="p-5 border-b border-gray-600 text-xl font-semibold">
+          Chat
+        </h1>
 
         <div className="flex-1 overflow-y-auto p-5 space-y-4">
           {messages.map((msg, index) => (
-            <div key={index} className="chat chat-start">
+            <div
+              key={index}
+              className={`chat ${user.firstName === msg.firstName ? "chat-end" : "chat-start"}`}
+            >
               <div className="chat-header font-bold">
-                {msg.firstName}
+                {`${msg.firstName}  ${msg.lastName}`}
                 <time className="text-xs opacity-50 ml-2">now</time>
               </div>
               <div className="chat-bubble text-white">{msg.text}</div>
